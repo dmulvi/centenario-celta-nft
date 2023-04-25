@@ -1,0 +1,16 @@
+{
+    "name": "Centenario Celta NFT", 
+    "description": "Limited Edition of 500",
+    "image": "ipfs://bafkreibqw7c5snzal7u5isnv64cf3crp6hs6pubcuz3e4n75e6nhpgmvi4",
+    "external_url": "https://centenario.rccelta.es/en",
+    "attributes":  [
+        {
+            "trait_type": "background", 
+            "value": "white"
+        },
+        {
+            "trait_type": "chain",
+            "value": "polygon"
+        }
+    ]
+}

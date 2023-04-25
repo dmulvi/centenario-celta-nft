@@ -7,22 +7,18 @@ dotenv.config();
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.9",
-  defaultNetwork: "goerli",
+  defaultNetwork: "mumbai",
   networks: {
-    goerli: {
-      url: process.env.GOERLI_RPC_URL,
-      accounts: [process.env.PRIVATE_KEY]
-    },
     mumbai: {
       url: process.env.MUMBAI_RPC_URL,
       accounts: [process.env.PRIVATE_KEY]
     },
     matic: {
-      url: process.env.MAINNET_RPC_URL,
+      url: process.env.MATIC_RPC_URL,
       accounts: [process.env.PRIVATE_KEY]
     },
-    bsctest: {
-      url: process.env.BSC_TESTNET_RPC_URL,
+    goerli: {
+      url: process.env.GOERLI_RPC_URL,
       accounts: [process.env.PRIVATE_KEY]
     },
     localhost: {
@@ -41,7 +37,5 @@ module.exports = {
         goerli: process.env.ETHERSCAN_KEY,
         polygonMumbai: process.env.POLYGONSCAN_KEY
     }
-    // comment out above and uncomment this to verify on bscscan
-    //apiKey: process.env.BSCSCAN_KEY
   }
 };

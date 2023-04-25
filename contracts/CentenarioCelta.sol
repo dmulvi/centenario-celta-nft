@@ -3,13 +3,12 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract CentenarioCelta is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Burnable, AccessControl {
+contract CentenarioCelta is ERC721, ERC721Enumerable, ERC721Burnable, AccessControl {
     using Counters for Counters.Counter;
     using Strings for uint256;
 
@@ -20,6 +19,7 @@ contract CentenarioCelta is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Bu
 
     uint256 public constant MAX_SUPPLY = 500;
     uint256 public price = 0.01 ether; // 10 MATIC
+    string public baseUri = "https://bafkreibqw7c5snzal7u5isnv64cf3crp6hs6pubcuz3e4n75e6nhpgmvi4.ipfs.nftstorage.link/";
 
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
@@ -59,14 +59,31 @@ contract CentenarioCelta is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Bu
         price = _newPrice;
     }
 
+    function setCrossmintAddress(address _crossmintAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        crossmintAddress = _crossmintAddress;
+    }
+
+    function setUri(string calldata _newUri) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        baseUri = _newUri;
+    }
+
     function withdraw() public onlyRole(DEFAULT_ADMIN_ROLE) {
         payable(msg.sender).transfer(address(this).balance);
     }
 
 
     // ------------------------------
-    // overrides required by Solidity
+    // ERC-721 Overrides
     // ------------------------------
+
+    function tokenURI(uint256 /*tokenId*/)
+        public
+        view
+        override
+        returns (string memory)
+    {
+        return baseUri;
+    }
 
     function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
         internal
@@ -75,17 +92,8 @@ contract CentenarioCelta is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Bu
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
-    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+    function _burn(uint256 tokenId) internal override {
         super._burn(tokenId);
-    }
-
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
-        return super.tokenURI(tokenId);
     }
 
     function supportsInterface(bytes4 interfaceId)
