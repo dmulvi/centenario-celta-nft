@@ -19,7 +19,7 @@ contract CentenarioCelta is ERC721, ERC721Enumerable, ERC721Burnable, AccessCont
 
     uint256 public constant MAX_SUPPLY = 500;
     uint256 public price = 0.01 ether; // 10 MATIC
-    string public baseUri = "https://bafkreibqw7c5snzal7u5isnv64cf3crp6hs6pubcuz3e4n75e6nhpgmvi4.ipfs.nftstorage.link/";
+    string public baseUri = "https://bafkreihgonrtu7xig2elazkhyd424uozpe2zs35gdhd6my4sgskpsaij7i.ipfs.nftstorage.link/";
 
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
